@@ -41,17 +41,17 @@ RUN pip install setuptools pip-tools
 RUN pip-compile --verbose /temp/requirements.in
 RUN pip install --no-cache-dir --ignore-installed -r /temp/requirements.txt
 
-# # streamlit setting.
-# ENV STREAMLIT_SERVER_ENABLE_STATIC_SERVING=true
+# streamlit setting.
+ENV STREAMLIT_SERVER_ENABLE_STATIC_SERVING=true
 
-# # jupyer notebook setting.
-# RUN jupyter notebook --generate-config
-# RUN echo "c.NotebookApp.allow_root=True" >> /root/.jupyter/jupyter_notebook_config.py
+# jupyer notebook setting.
+RUN jupyter notebook --generate-config
+RUN echo "c.NotebookApp.allow_root=True" >> /root/.jupyter/jupyter_notebook_config.py
 
-# # git setting.
-# RUN curl -o /temp/git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-# RUN echo "source /temp/git-prompt.sh" >> ~/.bashrc&& \ 
-#     echo "GIT_PS1_SHOWDIRTYSTATE=1" >> ~/.bashrc && \
-#     echo "PS1='\\u@\\h \\w\$(__git_ps1 \" (%s)\") $ '" >> ~/.bashrc
+# git setting.
+RUN curl -o /temp/git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+RUN echo "source /temp/git-prompt.sh" >> ~/.bashrc&& \ 
+    echo "GIT_PS1_SHOWDIRTYSTATE=1" >> ~/.bashrc && \
+    echo "PS1='\\u@\\h \\w\$(__git_ps1 \" (%s)\") $ '" >> ~/.bashrc
 
-# SHELL ["/bin/bash", "-c"]
+SHELL ["/bin/bash", "-c"]
