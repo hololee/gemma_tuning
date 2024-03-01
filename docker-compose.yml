@@ -1,0 +1,15 @@
+version: "3"
+services:
+  ml:
+    image: "ml:tools"
+    build:
+      context: .
+    stdin_open: true
+    tty: true
+    working_dir: /space
+    volumes:
+      - ${PWD}:/space
+      - ${HOME}/.sky:/root/.sky # for skypilot.
+      - ${HOME}/.ssh:/root/.ssh # for db key.
+    ipc: host
+    network_mode: host
