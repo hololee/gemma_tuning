@@ -26,21 +26,12 @@ RUN apt-get clean && \
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-# pip server.
-RUN mkdir ~/.pip
-RUN echo "[global]"  >> ~/.pip/pip.conf
-RUN echo "index-url=http://ftp.daumkakao.com/pypi/simple"  >> ~/.pip/pip.conf
-RUN echo "trusted-host=ftp.daumkakao.com"  >> ~/.pip/pip.conf
-
 RUN pip install --upgrade pip
-RUN pip install setuptools pip-tools 
+RUN pip install setuptools pip-tools jupyter
 
-# # streamlit setting.
-# ENV STREAMLIT_SERVER_ENABLE_STATIC_SERVING=true
-
-# # jupyer notebook setting.
-# RUN jupyter notebook --generate-config
-# RUN echo "c.NotebookApp.allow_root=True" >> /root/.jupyter/jupyter_notebook_config.py
+# jupyer notebook setting.
+RUN jupyter notebook --generate-config
+RUN echo "c.NotebookApp.allow_root=True" >> /root/.jupyter/jupyter_notebook_config.py
 
 # git setting.
 RUN curl -o ~/git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh && \
