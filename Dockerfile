@@ -12,6 +12,7 @@ RUN apt install -y --no-install-recommends \
     curl \
     ffmpeg \
     gcc \
+    python3-pip \
     ca-certificates \
     build-essential \
     libgl1-mesa-glx \
@@ -23,7 +24,6 @@ RUN apt install -y --no-install-recommends \
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY requirements.in /temp/requirements.in
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # pip server.
@@ -34,19 +34,17 @@ RUN echo "trusted-host=ftp.daumkakao.com"  >> ~/.pip/pip.conf
 
 RUN pip install --upgrade pip
 RUN pip install setuptools pip-tools 
-RUN pip-compile --verbose /temp/requirements.in
-RUN pip install --no-cache-dir --ignore-installed -r /temp/requirements.txt
 
-# streamlit setting.
-ENV STREAMLIT_SERVER_ENABLE_STATIC_SERVING=true
+# # streamlit setting.
+# ENV STREAMLIT_SERVER_ENABLE_STATIC_SERVING=true
 
-# jupyer notebook setting.
-RUN jupyter notebook --generate-config
-RUN echo "c.NotebookApp.allow_root=True" >> /root/.jupyter/jupyter_notebook_config.py
+# # jupyer notebook setting.
+# RUN jupyter notebook --generate-config
+# RUN echo "c.NotebookApp.allow_root=True" >> /root/.jupyter/jupyter_notebook_config.py
 
 # git setting.
-RUN curl -o /temp/git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-RUN echo "source /temp/git-prompt.sh" >> ~/.bashrc&& \ 
+RUN curl -o ~/git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh && \
+    echo "source ~/git-prompt.sh" >> ~/.bashrc && \ 
     echo "GIT_PS1_SHOWDIRTYSTATE=1" >> ~/.bashrc && \
     echo "PS1='\\u@\\h \\w\$(__git_ps1 \" (%s)\") $ '" >> ~/.bashrc
 

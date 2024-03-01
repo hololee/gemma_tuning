@@ -9,7 +9,5 @@ services:
     working_dir: /space
     volumes:
       - ${PWD}:/space
-      - ${HOME}/.sky:/root/.sky # for skypilot.
-      - ${HOME}/.ssh:/root/.ssh # for db key.
     ipc: host
     network_mode: host
