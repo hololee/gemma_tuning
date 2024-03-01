@@ -12,9 +12,9 @@ RUN apt install -y --no-install-recommends \
     curl \
     ffmpeg \
     gcc \
-    python3.10 \
-    python3.10-dev \
-    python3.10-venv \
+    python3.11 \
+    python3.11-dev \
+    python3.11-venv \
     python3-pip \
     ca-certificates \
     build-essential \
